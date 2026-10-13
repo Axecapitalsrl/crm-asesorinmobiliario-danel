@@ -206,10 +206,9 @@ alter table public.stage_history enable row level security;
 drop policy if exists "owner reads own profile" on public.profiles;
 create policy "owner reads own profile" on public.profiles for select to authenticated
 using (id = (select auth.uid()) and public.is_crm_owner());
+
+-- Profile role/activation are managed only via trusted SQL/dashboard, not app clients.
 drop policy if exists "owner updates own profile" on public.profiles;
-create policy "owner updates own profile" on public.profiles for update to authenticated
-using (id = (select auth.uid()) and public.is_crm_owner())
-with check (id = (select auth.uid()) and role = 'owner' and is_active = true);
 
 do $$
 declare t text;
