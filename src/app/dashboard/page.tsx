@@ -18,7 +18,7 @@ export default async function DashboardPage() {
   }
 
   const [leadsR, stagesR, tasksR, propertiesR, goalsR, activitiesR, historyR, fieldsR] = await Promise.all([
-    supabase.from("leads").select("id,name,status,stage_id,created_at,source,lead_type,estimated_value,next_follow_up_at").order("created_at", { ascending: false }).limit(500),
+    supabase.from("leads").select("id,name,status,stage_id,created_at,updated_at,source,lead_type,estimated_value,next_follow_up_at").order("created_at", { ascending: false }).limit(500),
     supabase.from("pipeline_stages").select("id,name,color,position,is_won,is_lost,is_active").eq("is_active", true).order("position"),
     supabase.from("tasks").select("id,title,due_at,status,priority,lead_id").neq("status", "completed").order("due_at").limit(100),
     supabase.from("properties").select("id,title,status,listing_price,currency").order("created_at", { ascending: false }).limit(100),
