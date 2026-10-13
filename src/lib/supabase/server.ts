@@ -8,7 +8,7 @@ export async function createClient() {
   return createServerClient(url, key, {
     cookies: {
       getAll: () => store.getAll(),
-      setAll(values) {
+      setAll(values: Array<{ name: string; value: string; options?: Parameters<typeof store.set>[2] }>) {
         try { values.forEach(({ name, value, options }) => store.set(name, value, options)); }
         catch { /* Los Server Components no siempre pueden escribir cookies. */ }
       }

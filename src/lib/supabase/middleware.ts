@@ -8,7 +8,7 @@ export async function updateSession(request: NextRequest) {
   const supabase = createServerClient(url, key, {
     cookies: {
       getAll: () => request.cookies.getAll(),
-      setAll(values) {
+      setAll(values: Array<{ name: string; value: string; options?: Parameters<typeof response.cookies.set>[2] }>) {
         values.forEach(({ name, value }) => request.cookies.set(name, value));
         response = NextResponse.next({ request });
         values.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
